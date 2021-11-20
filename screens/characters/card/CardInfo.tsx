@@ -1,5 +1,5 @@
 import React from "react";
-import { Character } from "../../../entities";
+import { Character } from "../../../entities/entities";
 import Flex from "../../../ui-kit/Flex";
 import { Text } from "react-native";
 import { cardStyles } from "./cardStyles";
