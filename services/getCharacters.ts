@@ -1,4 +1,4 @@
-import { Result } from "../entities/entities";
+import { Result } from "../entities/character";
 import { createFailResponse, createSuccessResponse } from "./response";
 
 export const getCharacters = async (page: number) => {
