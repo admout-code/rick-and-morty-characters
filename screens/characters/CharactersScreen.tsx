@@ -1,7 +1,7 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import React, { useEffect, useState } from "react";
 import { View, Text, Image, ScrollView } from "react-native";
-import { Result } from "../../entities/entities";
+import { Result } from "../../entities/character";
 import { RootStackParamList } from "../../entities/navigation";
 import { getCharacters } from "../../services/getCharacters";
 import { isSuccessResponse } from "../../services/response";

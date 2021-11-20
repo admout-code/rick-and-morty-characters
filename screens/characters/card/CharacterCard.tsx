@@ -1,6 +1,6 @@
 import React from "react";
 import { Image, TouchableOpacity } from "react-native";
-import { Character } from "../../../entities/entities";
+import { Character } from "../../../entities/character";
 import Dot from "../../../ui-kit/Dot";
 import Flex from "../../../ui-kit/Flex";
 import CardInfo from "./CardInfo";
