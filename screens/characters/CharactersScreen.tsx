@@ -7,6 +7,7 @@ import { getCharacters } from "../../services/getCharacters";
 import { isSuccessResponse } from "../../services/response";
 import Button from "../../ui-kit/Button";
 import Flex from "../../ui-kit/Flex";
+import Loading from "../../ui-kit/Loading";
 import CharacterCard from "./card/CharacterCard";
 import { charactersScreenStyles } from "./charactersScreenStyles";
 
@@ -22,7 +23,7 @@ function CharactersScreen({ navigation }: Props) {
         });
     }, [page]);
 
-    if (!data) return <Text>Loading...</Text>;
+    if (!data) return <Loading />;
 
     return (
         <ScrollView style={charactersScreenStyles.container}>

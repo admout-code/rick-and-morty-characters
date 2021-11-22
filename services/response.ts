@@ -1,4 +1,4 @@
-enum ResponseStatus {
+export enum ResponseStatus {
     FAIL = "fail",
     SUCCESS = "success",
 }

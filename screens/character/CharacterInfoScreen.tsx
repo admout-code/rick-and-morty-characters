@@ -6,6 +6,7 @@ import { RootStackParamList } from "../../entities/navigation";
 import { getSimpleCharacter } from "../../services/getSimpleCharacter";
 import { isSuccessResponse } from "../../services/response";
 import Flex from "../../ui-kit/Flex";
+import Loading from "../../ui-kit/Loading";
 import CardInfo from "../characters/card/CardInfo";
 import { characterInfoStyles } from "./characterInfoStyles";
 import Episodes from "./Episodes";
@@ -23,7 +24,7 @@ function CharacterInfoScreen({ route }: Props) {
         });
     }, []);
 
-    if (!character) return <Text>Loading...</Text>;
+    if (!character) return <Loading />;
 
     return (
         <Flex direction="column" style={styles.container}>
