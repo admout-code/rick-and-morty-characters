@@ -1,5 +1,5 @@
 export type RootStackParamList = {
     Home: undefined;
     CharactersList: undefined;
-    Character: { characterId: number };
+    Character: { characterId: number, characterName: string };
 };
