@@ -1,6 +1,6 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import React, { useEffect, useState } from "react";
-import { View, Text, Image, ScrollView } from "react-native";
+import React, { useCallback, useEffect, useRef, useState } from "react";
+import { View, Text, ScrollView } from "react-native";
 import { Result } from "../../entities/character";
 import { RootStackParamList } from "../../entities/navigation";
 import { getCharacters } from "../../services/getCharacters";
@@ -14,6 +14,8 @@ import { charactersScreenStyles } from "./charactersScreenStyles";
 type Props = NativeStackScreenProps<RootStackParamList, "CharactersList">;
 
 function CharactersScreen({ navigation }: Props) {
+    const styles = charactersScreenStyles;
+    const scrollRef = useRef<ScrollView>(null);
     const [page, setPage] = useState(1);
     const [data, setData] = useState<Result>();
 
@@ -23,23 +25,54 @@ function CharactersScreen({ navigation }: Props) {
         });
     }, [page]);
 
+    const goNextPage = useCallback(() => {
+        if (page === data?.info.pages) return;
+        setPage((prev) => prev + 1);
+        scrollRef.current?.scrollTo({
+            y: 0,
+            animated: true,
+        });
+    }, [data, page]);
+
+    const goPreviousPage = useCallback(() => {
+        if (page === 1) return;
+        setPage((prev) => prev - 1);
+        scrollRef.current?.scrollTo({
+            y: 0,
+            animated: true,
+        });
+    }, [page]);
+
     if (!data) return <Loading />;
 
     return (
-        <ScrollView style={charactersScreenStyles.container}>
-            <Flex direction="column">
-                {data.results.map((character) => (
-                    <CharacterCard
-                        key={character.id}
-                        onPress={() => {
-                            navigation.navigate("Character", { characterId: character.id });
-                        }}
-                        character={character}
-                    />
-                ))}
+        <View style={styles.container}>
+            <ScrollView ref={scrollRef} style={styles.scrollViewContainer}>
+                <Flex direction="column">
+                    {data.results.map((character) => (
+                        <CharacterCard
+                            key={character.id}
+                            onPress={() => {
+                                navigation.navigate("Character", {
+                                    characterId: character.id,
+                                    characterName: character.name,
+                                });
+                            }}
+                            character={character}
+                        />
+                    ))}
+                </Flex>
+            </ScrollView>
+            <Flex style={styles.paginationContainer} direction="row">
+                <Button disabled={page === 1} variant="text" onPress={goPreviousPage}>
+                    Previous
+                </Button>
+                <Text style={styles.paginationPage}>Page: {page}</Text>
+                <Button disabled={page === data.info.pages} variant="text" onPress={goNextPage}>
+                    Next
+                </Button>
             </Flex>
-            <Button onPress={() => setPage((prev) => prev + 1)}>Next</Button>
-        </ScrollView>
+        </View>
     );
 }
 
